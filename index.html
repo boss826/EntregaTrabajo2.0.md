@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>La Opiniòn</title>
+    <link rel="stylesheet" href="Style.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800&display=swap" rel="stylesheet">
+    <link href="responsive.css" rel="stylesheet">
+</head>
+
+<body>
+    <header id="header" class="textos-header">
+        <nav>
+            <h1 href="#">La Opiniòn</h1>
+
+        </nav>
+        <section class="textos-header">
+            <h1>Conecta con la verdad,</h1>
+            <h2> conecta con La Opinión Digital</h2>
+        </section>
+        <a href="#modal" class="cta">suscripción</a>
+        <section id="modal" class="modal">
+            <div class="modal__container">
+                <div class="container">
+                    <h2>Suscripción</h2>
+                    <form>
+                        <div class="form-group">
+                            <label for="txtId">Cedula de ciudadania</label>
+                            <input type="text" class="form-control" id="txtId" placeholder="Enter the id">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="txtName">Nombre</label>
+                            <input type="text" class="form-control" id="txtName" placeholder="Enter the name">
+                        </div>
+                        <div class="form-group">
+                            <label for="txtCountry">Numero de Celular</label>
+                            <input type="text" class="form-control" id="txtCountry" placeholder="Enter the country">
+                        </div>
+                        <div class="form-group">
+                            <label for="textBirthday">Fecha de Nacimiento</label>
+                            <input type="date" class="form-control" id="txtBirthday" placeholder="Enter the birthday">
+                        </div>
+                        <div class="form-group">
+                            <label for="textEmail">Correo Electronico</label>
+                            <input type="email" class="form-control" id="txtEmail" placeholder="Enter the email">
+                        </div>
+                        <button type="button" class="btn btn-default" id="btnSaveRegister">Guardar</button>
+                    </form>
+                </div>
+                <div class="container">
+                    <h2> Registro</h2>
+                    <table class="table table-hover" id="registerTable">
+                        <thead>
+                            <tr>
+                                <th>Cedula de ciudadania</th>
+                                <th>Nombre</th>
+                                <th>Numero de Celular</th>
+                                <th>Fecha de cumpleaños</th>
+                                <th>Correo Electronico</th>
+                                <th>Seleccionar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+
+                </div>
+
+                <a href="#" class="modal__close">Registrado</a>
+            </div>
+        </section>
+        <script>
+            var registerList = [];
+
+            function addRegisterToSystem(pid, pname, pcountry, pbirthday, pemail) {
+                var newregister = {
+                    id: pid,
+                    name: pname,
+                    country: pcountry,
+                    birthday: pbirthday,
+                    email: pemail
+                };
+                console.log(newregister);
+                registerList.push(newregister);
+                LocalStorageRegisterList(registerList);
+            }
+
+            function getRegisterList() {
+                var storedList = localStorage.getItem('localRegisterList');
+                if (storedList == null) {
+                    registerList = [];
+                } else {
+                    registerList = JSON.parse(storedList);
+                }
+                return registerList;
+            }
+
+            function LocalStorageRegisterList(plist) {
+                localStorage.setItem('localRegisterList', JSON.stringify(plist));
+            }
+        </script>
+        <script>
+            document.querySelector('#btnSaveRegister').addEventListener('click', saveRegister);
+            drawRegisterTable();
+
+
+            function saveRegister() {
+                var sId = document.querySelector('#txtId').value,
+                    sName = document.querySelector('#txtName').value,
+                    sCountry = document.querySelector('#txtCountry').value,
+                    dBirthday = document.querySelector('#txtBirthday').value,
+                    sEmail = document.querySelector('#txtEmail').value;
+
+                addRegisterToSystem(sId, sName, sCountry, dBirthday, sEmail);
+                drawRegisterTable();
+            }
+
+            function drawRegisterTable() {
+                var list = getRegisterList(),
+                    tbody = document.querySelector('#registerTable tbody');
+
+
+                tbody.innerHTML = '';
+
+                for (var i = 0; i < list.length; i++) {
+                    var row = tbody.insertRow(i),
+                        idCell = row.insertCell(0),
+                        nameCell = row.insertCell(1),
+                        countryCell = row.insertCell(2),
+                        birthdayCell = row.insertCell(3),
+                        emailCell = row.insertCell(4),
+                        selectCell = row.insertCell(5);
+
+                    idCell.innerHTML = list[i].id;
+                    nameCell.innerHTML = list[i].name;
+                    countryCell.innerHTML = list[i].country;
+                    birthdayCell.innerHTML = list[i].birthday;
+                    emailCell.innerHTML = list[i].email;
+
+                    var inputSelect = document.createElement('input');
+                    inputSelect.type = 'radio';
+                    inputSelect.value = list[i].id;
+                    selectCell.appendChild(inputSelect);
+
+
+                    tbody.appendChild(row);
+
+                }
+            }
+        </script>
+    </header>
+    <main>
+        <section class="contenedor sobre-nosotros">
+            <h2 class="titulo">¿Qué beneficios tiene el plan básico anual?</h2>
+            <div class="contenedor-sobre-nosotros">
+                <img src="Images/Line.svg" alt="" class="imagen-about-us">
+                <div class="contenido-textos">
+                    <h3><span>1</span>Contenido Multimedia</h3>
+                    <p>Recibirás de primera mano alertas sobre la información exclusiva que puedes disfrutar y contenidos en diferentes formatos.</p>
+                    <h3><span>2</span>Los mejores productos</h3>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt veniam eius aspernatur ad consequuntur aperiam minima sed dicta odit numquam sapiente quam eum, architecto animi pariatur, velit doloribus laboriosam ut.</p>
+                </div>
+            </div>
+        </section>
+        <section class="contenedor sobre-nosotros">
+            <div class="contenedor-sobre-nosotros">
+                <img src="Images/podcaster.svg" alt="" class="imagen-about-us">
+                <div class="contenido-textos">
+                    <h3><span>3</span>Podcast Exclusivo</h3>
+                    <p>Podrás acceder a contenidos informativos en audio con diferentes temáticas que te servirán para tu vida diaria y profesional.</p>
+                    <h3><span>4</span>Acceso desde múltiples dispositivos</h3>
+                    <p>Con tu suscripción podrás estar actualizado con la mejor información noticiosa desde diferentes dispositivos.</p>
+                </div>
+            </div>
+        </section>
+        <section class="contenedor sobre-nosotros">
+            <div class="contenedor-sobre-nosotros">
+                <img src="Images/charla.svg" alt="" class="imagen-about-us">
+                <div class="contenido-textos">
+                    <h3><span>5</span>Revistas digitales</h3>
+                    <p>Recibirás de primera mano alertas sobre la información exclusiva que puedes disfrutar y contenidos en diferentes formatos.</p>
+                    <h3><span>6</span>Acceso ilimitado</h3>
+                    <p>Podrás consumir toda la información publicada en nuestra página web.</p>
+                    <h3><span>7</span>Charlas con expertos</h3>
+                    <p>Tendrás acceso a las charlas con expertos sobre diferentes y variados temas de interés que estén disponibles.</p>
+
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="contenedor-footer">
+            <div class="content-foo">
+                <h4>Phone</h4>
+                <p>1010101</p>
+            </div>
+            <div class="content-foo">
+                <h4>Email</h4>
+                <p>1010101</p>
+            </div>
+            <div class="content-foo">
+                <h4>Location</h4>
+                <p>01010101</p>
+            </div>
+        </div>
+        <h2 class="titulo-final">&copy; Jose David Escalante Gomez</h2>
+    </footer>
+
+</body>
+
+</html>
